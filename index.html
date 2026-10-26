@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚡ Electric Field Lines & Charges - فيزياء 12 بريدج | Mr. Mohammed Hesham</title>
+<meta name="description" content="امتحان تفاعلي شامل عن خطوط المجال الكهربائي والشحنات - فيزياء 12 بريدج">
+<meta name="author" content="Mr. Mohammed Hesham">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+body { font-family: 'Cairo', sans-serif; background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%); }
+body.en-mode { font-family: 'Inter', sans-serif; }
+.arabic-math { font-family: 'Amiri', 'Cairo', serif; }
+.correct { background-color: #dcfce7 !important; border-color: #16a34a !important; }
+.incorrect { background-color: #fee2e2 !important; border-color: #dc2626 !important; }
+.timer-warning { color: #dc2626 !important; animation: pulse 1s infinite; }
+@keyframes pulse { 50% { opacity: 0.7; } }
+@media print { .no-print { display: none !important; } }
+.success-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 0.875rem; }
+.grade-excellent { background: #dcfce7; color: #166534; }
+.grade-good { background: #fef3c7; color: #92400e; }
+.grade-pass { background: #dbeafe; color: #1e40af; }
+.grade-fail { background: #fee2e2; color: #991b1b; }
+.lang-switch { position: fixed; top: 16px; left: 16px; z-index: 100; background: white; padding: 6px; border-radius: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); display: flex; gap: 4px; border: 2px solid #7c3aed; }
+[dir="ltr"] .lang-switch { left: auto; right: 16px; }
+.lang-btn { padding: 6px 14px; border-radius: 20px; cursor: pointer; font-weight: bold; transition: all 0.3s; border: none; font-size: 0.875rem; background: transparent; color: #6b7280; }
+.lang-btn.active { background: #7c3aed; color: white; box-shadow: 0 2px 6px rgba(124,58,237,0.4); }
+.shuffle-badge { display: inline-block; background: linear-gradient(135deg, #7c3aed, #6d28d9); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; margin-right: 8px; }
+.math-display { display: inline-block; direction: ltr; font-family: 'Amiri', serif; font-size: 1.2em; padding: 2px 8px; background: #ede9fe; border-radius: 6px; margin: 2px; color: #5b21b6; font-weight: 600; }
+.save-indicator { position: fixed; bottom: 20px; left: 20px; z-index: 200; background: #10b981; color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+.save-indicator.show { opacity: 1; }
+.formula-box { background: #ede9fe; border: 2px solid #7c3aed; border-radius: 8px; padding: 12px; margin: 10px 0; font-family: 'Amiri', serif; direction: ltr; text-align: center; }
+.svg-graph { display: block; margin: 12px auto; background: white; border: 2px solid #e5e7eb; border-radius: 12px; padding: 8px; }
+.graph-container { text-align: center; margin: 10px 0; }
+.module-badge { display: inline-block; padding: 4px 16px; border-radius: 20px; font-weight: bold; font-size: 0.85rem; margin-bottom: 8px; }
+.module-1 { background: #ede9fe; color: #5b21b6; }
+.module-2 { background: #fef3c7; color: #92400e; }
+.module-3 { background: #dbeafe; color: #1e40af; }
+.module-4 { background: #fce7f3; color: #9f1239; }
+.module-5 { background: #ecfdf5; color: #065f46; }
+.module-6 { background: #fee2e2; color: #991b1b; }
+</style>
+</head>
+<body class="p-4 md:p-8 min-h-screen">
+
+<div class="lang-switch no-print">
+<button class="lang-btn active" onclick="setLanguage('ar')" id="btn-ar">عربي</button>
+<button class="lang-btn" onclick="setLanguage('en')" id="btn-en">EN</button>
+</div>
+
+<div id="saveIndicator" class="save-indicator">💾 <span data-ar="تم الحفظ" data-en="Saved">تم الحفظ</span></div>
+
+<div id="timer-container" class="max-w-5xl mx-auto mb-4 text-center no-print">
+<div class="bg-white p-4 rounded-2xl shadow-lg inline-block border-2 border-purple-100">
+<span class="text-gray-600 ml-2">⏰ الوقت المتبقي:</span>
+<span id="timer" class="text-2xl font-bold text-purple-700 font-mono">90:00</span>
+<span class="shuffle-badge">⚡ Electric Field Lines - 30 سؤال</span>
+</div>
+</div>
+
+<div class="max-w-5xl mx-auto mb-6 flex flex-wrap gap-3 justify-center no-print">
+<button onclick="toggleAnswers()" class="bg-purple-700 hover:bg-purple-800 text-white px-5 py-2 rounded-xl font-medium transition shadow">👀 إظهار/إخفاء الإجابات</button>
+<button onclick="window.print()" class="bg-gray-700 hover:bg-gray-900 text-white px-5 py-2 rounded-xl font-medium transition shadow">🖨️ طباعة</button>
+<button onclick="reshuffleExam()" class="bg-gradient-to-r from-purple-700 to-indigo-600 hover:from-purple-800 hover:to-indigo-700 text-white px-5 py-2 rounded-xl font-medium transition shadow">🔄 أسئلة جديدة</button>
+<button onclick="clearProgress()" class="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-xl font-medium transition shadow">️ مسح التقدم</button>
+</div>
+
+<header class="max-w-5xl mx-auto bg-white p-8 rounded-3xl shadow-2xl mb-8 border-4 border-purple-500">
+<div class="text-center">
+<div class="inline-block bg-purple-700 text-white px-6 py-2 rounded-full text-sm font-bold mb-4">PHYSICS 12 BRIDGE - QUESTION 6</div>
+<h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4"> خطوط المجال الكهربائي والشحنات</h1>
+<h2 class="text-xl text-purple-700 font-semibold mb-2">فيزياء 12 متقدم بريدج</h2>
+<p class="text-gray-600 mb-4">Electric Field Lines, Charges, and Field Patterns</p>
+<p class="text-sm text-green-600 font-semibold">💾 يتم حفظ تقدمك تلقائياً - 30 سؤالاً في 6 أقسام</p>
+</div>
+<div class="mt-6 flex flex-wrap justify-center gap-4 text-sm text-gray-600">
+<span>📅 التاريخ: <input type="text" id="examDate" class="border-b-2 border-purple-300 bg-transparent w-32 text-center"></span>
+<span>😊 الاسم: <input type="text" id="studentName" class="border-b-2 border-purple-300 bg-transparent w-40 text-center" placeholder="اكتب اسمك"></span>
+<span>🏫 الشعبة: <input type="text" id="studentClass" class="border-b-2 border-purple-300 bg-transparent w-32 text-center" placeholder="الشعبة"></span>
+<span> المدة: 90 دقيقة</span>
+<span>📊 المجموع: 100 درجة</span>
+</div>
+</header>
+
+<div class="max-w-5xl mx-auto mb-6 bg-white p-4 rounded-xl shadow-lg border-2 border-purple-200 no-print">
+<h3 class="font-bold text-lg mb-3 text-purple-800 text-center"> القواعد الأساسية لخطوط المجال</h3>
+<div class="grid md:grid-cols-3 gap-3 text-sm">
+<div class="formula-box"><strong>Positive charge:</strong> Lines point OUTWARD</div>
+<div class="formula-box"><strong>Negative charge:</strong> Lines point INWARD</div>
+<div class="formula-box"><strong>Line density:</strong> Indicates field strength</div>
+<div class="formula-box"><strong>Lines never cross</strong></div>
+<div class="formula-box"><strong>Lines start + end -</strong></div>
+<div class="formula-box"><strong>Perpendicular to surface</strong></div>
+</div>
+</div>
+
+<main class="max-w-5xl mx-auto space-y-8" id="exam-content"></main>
+
+<div class="text-center no-print pb-8 mt-8">
+<button onclick="gradeExam()" class="bg-gradient-to-r from-purple-700 to-indigo-600 hover:from-purple-800 hover:to-indigo-700 text-white text-lg px-12 py-4 rounded-2xl font-bold shadow-xl transition transform hover:scale-105">🎯 صحح إجاباتي!</button>
+</div>
+
+<div id="results-panel" class="max-w-5xl mx-auto mt-8 bg-white p-8 rounded-3xl shadow-2xl border-4 border-purple-500 hidden no-print">
+<h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">🏆 نتيجتك يا بطل! </h2>
+<div class="grid md:grid-cols-3 gap-4 mb-6">
+<div class="bg-purple-50 p-4 rounded-xl text-center"><p>😊 الاسم</p><p id="res-name" class="font-bold text-xl text-purple-700">-</p></div>
+<div class="bg-indigo-50 p-4 rounded-xl text-center"><p>📅 التاريخ</p><p id="res-date" class="font-bold text-xl text-indigo-700">-</p></div>
+<div class="bg-purple-50 p-4 rounded-xl text-center"><p>🌟 المجموع</p><p id="res-total" class="font-bold text-3xl text-purple-700">0 / 100</p></div>
+</div>
+<div class="text-center mb-6">
+<span id="success-badge" class="success-badge grade-excellent">-</span>
+<p id="success-percent" class="text-4xl font-bold text-purple-700 mt-2">0%</p>
+<p class="text-sm text-gray-500">نسبة النجاح</p>
+</div>
+<div class="bg-gray-50 p-6 rounded-xl mb-6">
+<h3 class="font-bold text-lg mb-4 text-gray-800">📊 أدائك في كل قسم:</h3>
+<div class="space-y-3" id="sections-performance"></div>
+</div>
+<div class="text-center">
+<button id="sendEmailBtn" onclick="sendResultsToEmail()" class="bg-gradient-to-r from-purple-700 to-indigo-600 text-white text-lg px-8 py-3 rounded-2xl font-bold shadow-xl transition">📧 أرسل النتيجة للمعلم</button>
+<p id="emailStatus" class="text-sm mt-2 text-center font-medium"></p>
+</div>
+</div>
+
+<footer class="max-w-5xl mx-auto mt-10 mb-8 text-center text-gray-500 text-sm no-print">
+© Electric Field Lines - Grade 12 Bridge | Mr. Mohammed Hesham ⚡
+</footer>
+
+<script>
+const PUBLIC_KEY = "Rb3Lq8tXaFmc5YHUH";
+const SERVICE_ID = "service_w15m64i";
+const TEMPLATE_ID = "template_5b0u2tq";
+const TARGET_EMAIL = "mohammedhesham872@gmail.com";
+emailjs.init(PUBLIC_KEY);
+
+const STORAGE_KEY = 'electric_field_lines_grade12_bridge_v1';
+const TOTAL_TIME = 5400;
+const TOTAL_QUESTIONS = 30;
+const TOTAL_SECTIONS = 6;
+const QUESTIONS_PER_SECTION = 5;
+
+let currentSeed = null;
+let answersVisible = false;
+let saveIndicatorTimeout = null;
+let currentLang = 'ar';
+let timeRemaining = TOTAL_TIME;
+let timerInterval;
+let examData;
+let correctAnswersMap = {};
+let rng = null;
+
+function mulberry32(a) {
+    return function() {
+        var t = a += 0x6D2B79F5;
+        t = Math.imul(t ^ t >>> 15, t | 1);
+        t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+        return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    }
+}
+
+function showSaveIndicator() {
+    const indicator = document.getElementById('saveIndicator');
+    indicator.classList.add('show');
+    if (saveIndicatorTimeout) clearTimeout(saveIndicatorTimeout);
+    saveIndicatorTimeout = setTimeout(() => indicator.classList.remove('show'), 1500);
+}
+
+function saveState(showIndicator = true) {
+    try {
+        const state = {
+            seed: currentSeed, lang: currentLang,
+            studentName: document.getElementById('studentName').value,
+            studentClass: document.getElementById('studentClass').value,
+            examDate: document.getElementById('examDate').value,
+            answers: getSelectedAnswers(),
+            timeRemaining: timeRemaining,
+            answersVisible: answersVisible, savedAt: Date.now()
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        if (showIndicator) showSaveIndicator();
+    } catch (e) { console.error('Save error:', e); }
+}
+
+function loadState() {
+    try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        return saved ? JSON.parse(saved) : null;
+    } catch (e) { return null; }
+}
+
+function getSelectedAnswers() {
+    const answers = {};
+    for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+        const selected = document.querySelector('input[name="q'+i+'"]:checked');
+        if (selected) answers[i] = selected.value;
+    }
+    return answers;
+}
+
+function restoreAnswers(answers) {
+    if (!answers) return;
+    for (const [idx, val] of Object.entries(answers)) {
+        const radio = document.querySelector('input[name="q'+idx+'"][value="'+val+'"]');
+        if (radio) radio.checked = true;
+    }
+}
+
+function clearProgress() {
+    const msg = currentLang === 'ar' ? '⚠️ هل أنت متأكد من مسح كل التقدم؟' : '⚠️ Clear all progress?';
+    if (confirm(msg)) { localStorage.removeItem(STORAGE_KEY); location.reload(); }
+}
+
+function setupAnswerListeners() {
+    document.getElementById('exam-content').addEventListener('change', (e) => {
+        if (e.target.type === 'radio') saveState();
+    });
+}
+
+function setupInputListeners() {
+    ['studentName', 'studentClass', 'examDate'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.addEventListener('input', () => saveState(false));
+            el.addEventListener('blur', () => saveState());
+        }
+    });
+}
+
+// ==================== SVG Diagrams ====================
+const svgGraphs = {
+    three_charges_field: `<svg class="svg-graph" width="400" height="280" viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="390" height="270" rx="12" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+        <text x="200" y="25" text-anchor="middle" font-size="14" fill="#5b21b6" font-weight="bold"> ثلاث شحنات وخطوط المجال</text>
+        <circle cx="100" cy="140" r="20" fill="#3b82f6" stroke="#1e40af" stroke-width="2"/>
+        <text x="100" y="145" text-anchor="middle" font-size="12" fill="white" font-weight="bold">1</text>
+        <circle cx="200" cy="140" r="25" fill="#ef4444" stroke="#991b1b" stroke-width="2"/>
+        <text x="200" y="145" text-anchor="middle" font-size="12" fill="white" font-weight="bold">2</text>
+        <circle cx="300" cy="140" r="20" fill="#3b82f6" stroke="#1e40af" stroke-width="2"/>
+        <text x="300" y="145" text-anchor="middle" font-size="12" fill="white" font-weight="bold">3</text>
+        <path d="M 120 140 Q 160 100 175 140" fill="none" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrow1)"/>
+        <path d="M 120 140 Q 160 180 175 140" fill="none" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrow2)"/>
+        <path d="M 225 140 Q 240 100 280 140" fill="none" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrow3)"/>
+        <path d="M 225 140 Q 240 180 280 140" fill="none" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrow4)"/>
+        <path d="M 200 115 L 200 60" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrow5)"/>
+        <path d="M 200 165 L 200 220" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrow6)"/>
+        <text x="100" y="180" text-anchor="middle" font-size="10" fill="#1e40af">Lines IN</text>
+        <text x="200" y="80" text-anchor="middle" font-size="10" fill="#991b1b">Lines OUT</text>
+        <text x="300" y="180" text-anchor="middle" font-size="10" fill="#1e40af">Lines IN</text>
+        <text x="200" y="260" text-anchor="middle" font-size="11" fill="#5b21b6" font-weight="bold">Charge 2 is positive (lines outward)</text>
+        <text x="200" y="275" text-anchor="middle" font-size="10" fill="#5b21b6">Charges 1 and 3 are negative (lines inward)</text>
+        <defs><marker id="arrow1" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#7c3aed"/></marker>
+        <marker id="arrow2" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#7c3aed"/></marker>
+        <marker id="arrow3" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#7c3aed"/></marker>
+        <marker id="arrow4" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#7c3aed"/></marker>
+        <marker id="arrow5" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#7c3aed"/></marker>
+        <marker id="arrow6" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#7c3aed"/></marker></defs>
+    </svg>`,
+    
+    field_patterns: `<svg class="svg-graph" width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="390" height="290" rx="12" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="200" y="25" text-anchor="middle" font-size="14" fill="#92400e" font-weight="bold">📊 أنماط المجال الكهربائي</text>
+        <text x="100" y="45" text-anchor="middle" font-size="11" fill="#92400e" font-weight="bold">Pattern 1: Point charge</text>
+        <circle cx="100" cy="100" r="15" fill="#ef4444" stroke="#991b1b" stroke-width="2"/>
+        <line x1="100" y1="85" x2="100" y2="60" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrow7)"/>
+        <line x1="115" y1="100" x2="140" y2="100" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrow7)"/>
+        <line x1="100" y1="115" x2="100" y2="140" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrow7)"/>
+        <line x1="85" y1="100" x2="60" y2="100" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrow7)"/>
+        <line x1="110" y1="90" x2="130" y2="70" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrow7)"/>
+        <line x1="90" y1="90" x2="70" y2="70" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrow7)"/>
+        <line x1="110" y1="110" x2="130" y2="130" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrow7)"/>
+        <line x1="90" y1="110" x2="70" y2="130" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrow7)"/>
+        <text x="300" y="45" text-anchor="middle" font-size="11" fill="#92400e" font-weight="bold">Pattern 2: Uniform field</text>
+        <line x1="240" y1="70" x2="360" y2="70" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow7)"/>
+        <line x1="240" y1="90" x2="360" y2="90" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow7)"/>
+        <line x1="240" y1="110" x2="360" y2="110" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow7)"/>
+        <line x1="240" y1="130" x2="360" y2="130" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow7)"/>
+        <text x="100" y="170" text-anchor="middle" font-size="11" fill="#92400e" font-weight="bold">Pattern 3: Dipole field</text>
+        <ellipse cx="100" cy="220" rx="50" ry="30" fill="none" stroke="#7c3aed" stroke-width="1.5"/>
+        <ellipse cx="100" cy="220" rx="35" ry="20" fill="none" stroke="#7c3aed" stroke-width="1.5"/>
+        <ellipse cx="100" cy="220" rx="20" ry="10" fill="none" stroke="#7c3aed" stroke-width="1.5"/>
+        <text x="300" y="170" text-anchor="middle" font-size="11" fill="#92400e" font-weight="bold">Pattern 4: Not valid</text>
+        <line x1="240" y1="220" x2="360" y2="200" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrow7)"/>
+        <line x1="240" y1="220" x2="360" y2="220" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrow7)"/>
+        <line x1="240" y1="220" x2="360" y2="240" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrow7)"/>
+        <line x1="240" y1="220" x2="280" y2="190" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrow7)"/>
+        <line x1="240" y1="220" x2="280" y2="250" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrow7)"/>
+        <text x="200" y="285" text-anchor="middle" font-size="10" fill="#92400e">Patterns 1, 2, 3 are valid; Pattern 4 is not (lines converge at point)</text>
+        <defs><marker id="arrow7" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#7c3aed"/></marker></defs>
+    </svg>`,
+    
+    positive_negative_charges: `<svg class="svg-graph" width="400" height="240" viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="390" height="230" rx="12" fill="#fce7f3" stroke="#ec4899" stroke-width="2"/>
+        <text x="200" y="25" text-anchor="middle" font-size="14" fill="#9f1239" font-weight="bold">⚡ الشحنات الموجبة والسالبة</text>
+        <circle cx="100" cy="120" r="30" fill="#ef4444" stroke="#991b1b" stroke-width="2"/>
+        <text x="100" y="115" text-anchor="middle" font-size="14" fill="white" font-weight="bold">+</text>
+        <text x="100" y="130" text-anchor="middle" font-size="10" fill="white">Positive</text>
+        <line x1="130" y1="120" x2="170" y2="120" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow8)"/>
+        <line x1="100" y1="90" x2="100" y2="50" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow8)"/>
+        <line x1="100" y1="150" x2="100" y2="190" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow8)"/>
+        <line x1="70" y1="120" x2="30" y2="120" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow8)"/>
+        <text x="100" y="215" text-anchor="middle" font-size="11" fill="#9f1239">Lines point OUTWARD</text>
+        <circle cx="300" cy="120" r="30" fill="#3b82f6" stroke="#1e40af" stroke-width="2"/>
+        <text x="300" y="115" text-anchor="middle" font-size="14" fill="white" font-weight="bold">−</text>
+        <text x="300" y="130" text-anchor="middle" font-size="10" fill="white">Negative</text>
+        <line x1="270" y1="120" x2="230" y2="120" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow9)"/>
+        <line x1="300" y1="90" x2="300" y2="50" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow9)"/>
+        <line x1="300" y1="150" x2="300" y2="190" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow9)"/>
+        <line x1="330" y1="120" x2="370" y2="120" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow9)"/>
+        <text x="300" y="215" text-anchor="middle" font-size="11" fill="#9f1239">Lines point INWARD</text>
+        <defs><marker id="arrow8" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#7c3aed"/></marker>
+        <marker id="arrow9" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#7c3aed"/></marker></defs>
+    </svg>`,
+    
+    field_line_properties: `<svg class="svg-graph" width="400" height="260" viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="390" height="250" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+        <text x="200" y="25" text-anchor="middle" font-size="14" fill="#065f46" font-weight="bold"> خصائص خطوط المجال</text>
+        <rect x="20" y="45" width="360" height="40" rx="6" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
+        <text x="200" y="70" text-anchor="middle" font-size="12" fill="#065f46" font-weight="bold">1. Lines start at positive charges</text>
+        <rect x="20" y="95" width="360" height="40" rx="6" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
+        <text x="200" y="120" text-anchor="middle" font-size="12" fill="#065f46" font-weight="bold">2. Lines end at negative charges</text>
+        <rect x="20" y="145" width="360" height="40" rx="6" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
+        <text x="200" y="170" text-anchor="middle" font-size="12" fill="#065f46" font-weight="bold">3. Lines never cross each other</text>
+        <rect x="20" y="195" width="360" height="40" rx="6" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
+        <text x="200" y="220" text-anchor="middle" font-size="12" fill="#065f46" font-weight="bold">4. Density indicates field strength</text>
+    </svg>`,
+    
+    dipole_field: `<svg class="svg-graph" width="400" height="260" viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="390" height="250" rx="12" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+        <text x="200" y="25" text-anchor="middle" font-size="14" fill="#1e40af" font-weight="bold">⚡ ثنائي القطب - Electric Dipole</text>
+        <circle cx="120" cy="130" r="25" fill="#ef4444" stroke="#991b1b" stroke-width="2"/>
+        <text x="120" y="135" text-anchor="middle" font-size="14" fill="white" font-weight="bold">+q</text>
+        <circle cx="280" cy="130" r="25" fill="#3b82f6" stroke="#1e40af" stroke-width="2"/>
+        <text x="280" y="135" text-anchor="middle" font-size="14" fill="white" font-weight="bold">−q</text>
+        <path d="M 145 130 Q 200 100 255 130" fill="none" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrow10)"/>
+        <path d="M 145 130 Q 200 160 255 130" fill="none" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrow10)"/>
+        <path d="M 120 105 Q 120 60 200 60 Q 280 60 280 105" fill="none" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrow10)"/>
+        <path d="M 120 155 Q 120 200 200 200 Q 280 200 280 155" fill="none" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrow10)"/>
+        <text x="200" y="240" text-anchor="middle" font-size="11" fill="#1e40af">Lines go from +q to −q</text>
+        <text x="200" y="255" text-anchor="middle" font-size="10" fill="#1e40af">Field is strongest between the charges</text>
+        <defs><marker id="arrow10" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#7c3aed"/></marker></defs>
+    </svg>`,
+    
+    test_charge_motion: `<svg class="svg-graph" width="400" height="240" viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="390" height="230" rx="12" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+        <text x="200" y="25" text-anchor="middle" font-size="14" fill="#991b1b" font-weight="bold">🔬 حركة شحنة اختبار في المجال</text>
+        <line x1="50" y1="120" x2="350" y2="120" stroke="#7c3aed" stroke-width="2"/>
+        <line x1="80" y1="100" x2="80" y2="140" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow11)"/>
+        <line x1="130" y1="100" x2="130" y2="140" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow11)"/>
+        <line x1="180" y1="100" x2="180" y2="140" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow11)"/>
+        <line x1="230" y1="100" x2="230" y2="140" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow11)"/>
+        <line x1="280" y1="100" x2="280" y2="140" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow11)"/>
+        <line x1="330" y1="100" x2="330" y2="140" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow11)"/>
+        <circle cx="200" cy="120" r="10" fill="#ef4444" stroke="#991b1b" stroke-width="2"/>
+        <text x="200" y="125" text-anchor="middle" font-size="10" fill="white" font-weight="bold">+q</text>
+        <line x1="210" y1="120" x2="280" y2="120" stroke="#dc2626" stroke-width="3" marker-end="url(#arrow12)"/>
+        <text x="245" y="110" text-anchor="middle" font-size="10" fill="#dc2626" font-weight="bold">F = qE</text>
+        <text x="200" y="170" text-anchor="middle" font-size="11" fill="#991b1b">Positive test charge moves ALONG field lines</text>
+        <text x="200" y="190" text-anchor="middle" font-size="11" fill="#991b1b">Negative test charge moves OPPOSITE to field lines</text>
+        <text x="200" y="215" text-anchor="middle" font-size="10" fill="#991b1b">Force is tangent to field line at every point</text>
+        <defs><marker id="arrow11" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#7c3aed"/></marker>
+        <marker id="arrow12" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#dc2626"/></marker></defs>
+    </svg>`
+};
+
+// ==================== EXAM DATA - 30 QUESTIONS ====================
+const originalExamData = {
+    sections: [
+        {
+            id: 'sec1',
+            title: { ar: '🔹 القسم 1: إشارات الشحنات (Q1-Q5)', en: '🔹 Section 1: Charge Signs (Q1-Q5)' },
+            questions: [
+                {
+                    q: { ar: 'في الشكل، خطوط المجال تخرج من الشحنة 2 وتدخل في الشحنتين 1 و 3. ما إشارات الشحنات؟', en: 'In figure, field lines exit charge 2 and enter charges 1 and 3. What are the signs?' },
+                    svg: svgGraphs.three_charges_field,
+                    options: [
+                        { ar: 'الشحنة 2 موجبة، والشحنتان 1 و 3 سالبتان', en: 'Charge 2 positive, charges 1 and 3 negative' },
+                        { ar: 'الشحنة 2 سالبة، والشحنتان 1 و 3 موجبتان', en: 'Charge 2 negative, charges 1 and 3 positive' },
+                        { ar: 'جميع الشحنات موجبة', en: 'All charges positive' },
+                        { ar: 'جميع الشحنات سالبة', en: 'All charges negative' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'خطوط المجال تخرج من الشحنات الموجبة وتدخل في السالبة. الشحنة 2 تخرج منها الخطوط → موجبة. الشحنتان 1 و 3 تدخل فيهما الخطوط → سالبتان', en: 'Field lines exit positive charges and enter negative. Charge 2 has lines exiting → positive. Charges 1, 3 have lines entering → negative' }
+                },
+                {
+                    q: { ar: 'إذا كانت خطوط المجال الكهربائي تخرج من شحنة في جميع الاتجاهات، فإن الشحنة:', en: 'If electric field lines radiate outward from a charge in all directions, the charge is:' },
+                    svg: svgGraphs.positive_negative_charges,
+                    options: [
+                        { ar: 'موجبة', en: 'Positive' },
+                        { ar: 'سالبة', en: 'Negative' },
+                        { ar: 'متعادلة', en: 'Neutral' },
+                        { ar: 'لا يمكن التحديد', en: 'Cannot determine' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'خطوط المجال تخرج من الشحنات الموجبة', en: 'Field lines exit from positive charges' }
+                },
+                {
+                    q: { ar: 'إذا كانت خطوط المجال الكهربائي تدخل في شحنة من جميع الاتجاهات، فإن الشحنة:', en: 'If electric field lines converge inward to a charge from all directions, the charge is:' },
+                    options: [
+                        { ar: 'سالبة', en: 'Negative' },
+                        { ar: 'موجبة', en: 'Positive' },
+                        { ar: 'متعادلة', en: 'Neutral' },
+                        { ar: 'لا يمكن التحديد', en: 'Cannot determine' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'خطوط المجال تدخل في الشحنات السالبة', en: 'Field lines enter negative charges' }
+                },
+                {
+                    q: { ar: 'في الشكل المرفق (السؤال 2.1)، أي الشحنات موجبة؟', en: 'In the attached figure (Question 2.1), which charges are positive?' },
+                    options: [
+                        { ar: 'رقم 2 فقط', en: 'Number 2 only' },
+                        { ar: 'رقم 1 فقط', en: 'Number 1 only' },
+                        { ar: 'رقم 3 فقط', en: 'Number 3 only' },
+                        { ar: 'أرقام 1 و 3', en: 'Numbers 1 and 3' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'الشحنة 2 فقط هي الموجبة لأن خطوط المجال تخرج منها', en: 'Only charge 2 is positive because field lines exit from it' }
+                },
+                {
+                    q: { ar: 'شحنة نقطية خطوط مجالها دائرية مغلقة حولها. هذا يعني أن:', en: 'A point charge has circular closed field lines around it. This means:' },
+                    options: [
+                        { ar: 'هذا غير ممكن - خطوط المجال لا تكون دوائر مغلقة حول شحنة نقطية', en: 'This is impossible - field lines do not form closed circles around a point charge' },
+                        { ar: 'الشحنة موجبة', en: 'Charge is positive' },
+                        { ar: 'الشحنة سالبة', en: 'Charge is negative' },
+                        { ar: 'الشحنة متعادلة', en: 'Charge is neutral' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'خطوط المجال الكهربائي لشحنة نقطية تكون شعاعية (تخرج أو تدخل)، وليست دوائر مغلقة. الدوائر المغلقة تمثل مجال مغناطيسي', en: 'Electric field lines of a point charge are radial (out or in), not closed circles. Closed circles represent magnetic field' }
+                }
+            ]
+        },
+        {
+            id: 'sec2',
+            title: { ar: '🔹 القسم 2: أنماط المجال الكهربائي (Q6-Q10)', en: '🔹 Section 2: Electric Field Patterns (Q6-Q10)' },
+            questions: [
+                {
+                    q: { ar: 'أي الأنماط الأربعة في الشكل (2.2) يمكن أن يمثل مجالاً كهربائياً؟', en: 'Which of the four patterns in figure (2.2) can represent an electric field?' },
+                    svg: svgGraphs.field_patterns,
+                    options: [
+                        { ar: 'الأنماط 1 و 2 و 3 فقط', en: 'Patterns 1, 2, and 3 only' },
+                        { ar: 'النمط 1 فقط', en: 'Pattern 1 only' },
+                        { ar: 'النمط 2 فقط', en: 'Pattern 2 only' },
+                        { ar: 'الأنماط 2 و 3 فقط', en: 'Patterns 2 and 3 only' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'النمط 1 (شحنة نقطية)، النمط 2 (مجال منتظم)، النمط 3 (ثنائي قطب) كلها صحيحة. النمط 4 خاطئ لأن الخطوط تتقاطع في نقطة', en: 'Pattern 1 (point charge), 2 (uniform field), 3 (dipole) are valid. Pattern 4 is invalid because lines converge at a point' }
+                },
+                {
+                    q: { ar: 'النمط 1 في الشكل يمثل:', en: 'Pattern 1 in the figure represents:' },
+                    options: [
+                        { ar: 'مجال شحنة نقطية موجبة', en: 'Field of a positive point charge' },
+                        { ar: 'مجال منتظم', en: 'Uniform field' },
+                        { ar: 'مجال ثنائي قطب', en: 'Dipole field' },
+                        { ar: 'مجال مغناطيسي', en: 'Magnetic field' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'النمط 1 يظهر خطوطاً شعاعية تخرج من نقطة → شحنة نقطية موجبة', en: 'Pattern 1 shows radial lines exiting a point → positive point charge' }
+                },
+                {
+                    q: { ar: 'النمط 2 في الشكل (خطوط متوازية متساوية التباعد) يمثل:', en: 'Pattern 2 in figure (parallel equally-spaced lines) represents:' },
+                    options: [
+                        { ar: 'مجال كهربائي منتظم (Uniform electric field)', en: 'Uniform electric field' },
+                        { ar: 'مجال شحنة نقطية', en: 'Point charge field' },
+                        { ar: 'مجال ثنائي قطب', en: 'Dipole field' },
+                        { ar: 'لا يوجد مجال', en: 'No field' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'الخطوط المتوازية متساوية التباعد تمثل مجالاً منتظماً (مثل مجال بين لوحين متوازيين)', en: 'Parallel equally-spaced lines represent uniform field (like between parallel plates)' }
+                },
+                {
+                    q: { ar: 'النمط 3 في الشكل (خطوط بيضاوية مغلقة) يمثل:', en: 'Pattern 3 in figure (closed oval lines) represents:' },
+                    options: [
+                        { ar: 'مجال ثنائي القطب الكهربائي', en: 'Electric dipole field' },
+                        { ar: 'مجال شحنة مفردة', en: 'Single charge field' },
+                        { ar: 'مجال منتظم', en: 'Uniform field' },
+                        { ar: 'مجال مغناطيسي فقط', en: 'Magnetic field only' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'الخطوط البيضاوية المغلقة التي تخرج من شحنة وتدخل في أخرى تمثل مجال ثنائي القطب', en: 'Closed oval lines exiting one charge and entering another represent dipole field' }
+                },
+                {
+                    q: { ar: 'لماذا النمط 4 لا يمثل مجالاً كهربائياً صحيحاً؟', en: 'Why does pattern 4 not represent a valid electric field?' },
+                    options: [
+                        { ar: 'لأن خطوط المجال تتقاطع في نقطة (لا يمكن أن تتقاطع خطوط المجال)', en: 'Because field lines intersect at a point (field lines cannot cross)' },
+                        { ar: 'لأن الخطوط مستقيمة', en: 'Because lines are straight' },
+                        { ar: 'لأن الخطوط متوازية', en: 'Because lines are parallel' },
+                        { ar: 'لأن الخطوط منحنية', en: 'Because lines are curved' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'خطوط المجال الكهربائي لا يمكن أن تتقاطع أبداً، لأن اتجاه المجال عند أي نقطة يكون واحداً فقط', en: 'Electric field lines can never cross, because field direction at any point is unique' }
+                }
+            ]
+        },
+        {
+            id: 'sec3',
+            title: { ar: '🔹 القسم 3: خصائص خطوط المجال (Q11-Q15)', en: '🔹 Section 3: Field Line Properties (Q11-Q15)' },
+            questions: [
+                {
+                    q: { ar: 'أي من العبارات التالية صحيحة عن خطوط المجال الكهربائي؟', en: 'Which statement about electric field lines is correct?' },
+                    svg: svgGraphs.field_line_properties,
+                    options: [
+                        { ar: 'تتجه خطوط المجال إلى داخل الشحنات السالبة', en: 'Field lines point into negative charges' },
+                        { ar: 'تتقاطع خطوط المجال مع بعضها', en: 'Field lines cross each other' },
+                        { ar: 'تكون خطوط المجال دوائر مغلقة دائماً', en: 'Field lines are always closed circles' },
+                        { ar: 'كثافة الخطوط لا تعبر عن شدة المجال', en: 'Line density does not indicate field strength' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'خطوط المجال تتجه إلى داخل الشحنات السالبة وتخرج من الموجبة', en: 'Field lines point into negative charges and exit positive charges' }
+                },
+                {
+                    q: { ar: 'خطوط المجال الكهربائي حول الشحنات الموجبة:', en: 'Electric field lines around positive charges:' },
+                    options: [
+                        { ar: 'دوائر حول الشحنات الموجبة', en: 'Circles around positive charges' },
+                        { ar: 'تتقاطع مع الشحنات السالبة', en: 'Intersect with negative charges' },
+                        { ar: 'لا يمكن أن تتقاطع', en: 'Cannot cross' },
+                        { ar: 'تتجه من الخارج إلى الداخل', en: 'Point from outside to inside' }
+                    ],
+                    correct: 2,
+                    answer: { ar: 'خطوط المجال الكهربائي لا يمكن أن تتقاطع أبداً', en: 'Electric field lines can never cross' }
+                },
+                {
+                    q: { ar: 'إذا أُطلقت شحنة نقطية موجبة من وضع السكون في مجال كهربائي، فإنها:', en: 'If a positive point charge is released from rest in an electric field, it:' },
+                    svg: svgGraphs.test_charge_motion,
+                    options: [
+                        { ar: 'تستسارع في البداية بطول خط المجال الكهربائي عند هذه النقطة', en: 'Initially accelerates along the field line at that point' },
+                        { ar: 'تتحرك عمودياً على خط المجال', en: 'Moves perpendicular to field line' },
+                        { ar: 'تبقى ساكنة', en: 'Remains stationary' },
+                        { ar: 'تتحرك عكس اتجاه المجال', en: 'Moves opposite to field direction' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'الشحنة الموجبة تتأثر بقوة في اتجاه المجال F = qE، فتتسارع بطول خط المجال', en: 'Positive charge experiences force F = qE in field direction, accelerates along field line' }
+                },
+                {
+                    q: { ar: 'كثافة خطوط المجال الكهربائي تعبر عن:', en: 'Density of electric field lines indicates:' },
+                    options: [
+                        { ar: 'شدة المجال الكهربائي', en: 'Electric field strength' },
+                        { ar: 'اتجاه المجال فقط', en: 'Field direction only' },
+                        { ar: 'نوع الشحنة', en: 'Type of charge' },
+                        { ar: 'كتلة الشحنة', en: 'Mass of charge' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'كلما زادت كثافة الخطوط، زادت شدة المجال الكهربائي', en: 'Higher line density means stronger electric field' }
+                },
+                {
+                    q: { ar: 'خطوط المجال الكهربائي تخرج من الشحنات:', en: 'Electric field lines exit from charges:' },
+                    options: [
+                        { ar: 'الموجبة وتدخل في السالبة', en: 'Positive and enter negative' },
+                        { ar: 'السالبة وتدخل في الموجبة', en: 'Negative and enter positive' },
+                        { ar: 'المتعادلة', en: 'Neutral' },
+                        { ar: 'أي شحنة', en: 'Any charge' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'خطوط المجال تخرج من الموجبة وتدخل في السالبة', en: 'Field lines exit positive and enter negative charges' }
+                }
+            ]
+        },
+        {
+            id: 'sec4',
+            title: { ar: '🔹 القسم 4: ثنائي القطب والمجال المنتظم (Q16-Q20)', en: '🔹 Section 4: Dipole & Uniform Field (Q16-Q20)' },
+            questions: [
+                {
+                    q: { ar: 'ثنائي القطب الكهربائي يتكون من:', en: 'Electric dipole consists of:' },
+                    svg: svgGraphs.dipole_field,
+                    options: [
+                        { ar: 'شحنتين متساويتين في المقدار ومختلفتين في الإشارة', en: 'Two equal and opposite charges' },
+                        { ar: 'شحنتين موجبتين متساويتين', en: 'Two equal positive charges' },
+                        { ar: 'شحنتين سالبتين متساويتين', en: 'Two equal negative charges' },
+                        { ar: 'شحنة واحدة فقط', en: 'Single charge only' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'ثنائي القطب = شحنتان متساويتان في المقدار (+q و -q) ومتقاربتان', en: 'Dipole = two equal magnitude charges (+q and -q) close together' }
+                },
+                {
+                    q: { ar: 'في مجال كهربائي منتظم (خطوط متوازية)، القوة على شحنة نقطية:', en: 'In uniform electric field (parallel lines), force on point charge:' },
+                    options: [
+                        { ar: 'ثابتة المقدار والاتجاه في كل النقاط', en: 'Constant in magnitude and direction at all points' },
+                        { ar: 'تتغير مع الموقع', en: 'Varies with position' },
+                        { ar: 'صفر دائماً', en: 'Always zero' },
+                        { ar: 'تعتمد على سرعة الشحنة', en: 'Depends on charge velocity' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'في المجال المنتظم E ثابت، لذا F = qE ثابتة المقدار والاتجاه', en: 'In uniform field E is constant, so F = qE is constant in magnitude and direction' }
+                },
+                {
+                    q: { ar: 'بين لوحي مكثف متوازيين، المجال الكهربائي:', en: 'Between parallel capacitor plates, electric field is:' },
+                    options: [
+                        { ar: 'منتظم (خطوط متوازية متساوية التباعد)', en: 'Uniform (parallel equally-spaced lines)' },
+                        { ar: 'يتغير مع المسافة', en: 'Varies with distance' },
+                        { ar: 'صفر', en: 'Zero' },
+                        { ar: 'دائري', en: 'Circular' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'المجال بين لوحين متوازيين مشحونين يكون منتظماً (ما عدا عند الحواف)', en: 'Field between parallel charged plates is uniform (except near edges)' }
+                },
+                {
+                    q: { ar: 'في منتصف المسافة بين شحنتين متساويتين ومتعاكستين (+q و -q)، المجال الكهربائي:', en: 'At midpoint between equal opposite charges (+q and -q), electric field:' },
+                    options: [
+                        { ar: 'ليس صفراً - له اتجاه من +q إلى -q', en: 'Not zero - directed from +q to -q' },
+                        { ar: 'صفر', en: 'Zero' },
+                        { ar: 'لانهائي', en: 'Infinite' },
+                        { ar: 'عمودي على الخط الواصل', en: 'Perpendicular to connecting line' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'المجالان من الشحنتين في نفس الاتجاه (من + إلى -) فيضافان', en: 'Fields from both charges point same direction (from + to -) so they add' }
+                },
+                {
+                    q: { ar: 'في منتصف المسافة بين شحنتين متساويتين ومتماثلتين (+q و +q)، المجال الكهربائي:', en: 'At midpoint between two equal similar charges (+q and +q), electric field:' },
+                    options: [
+                        { ar: 'صفر (يلغي كل منهما الآخر)', en: 'Zero (they cancel each other)' },
+                        { ar: 'ضعف مجال شحنة واحدة', en: 'Double field of one charge' },
+                        { ar: 'لانهائي', en: 'Infinite' },
+                        { ar: 'له اتجاه محدد', en: 'Has specific direction' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'المجالان متساويان في المقدار ومتعاكسان في الاتجاه → المحصلة صفر', en: 'Fields equal in magnitude, opposite in direction → net zero' }
+                }
+            ]
+        },
+        {
+            id: 'sec5',
+            title: { ar: '🔹 القسم 5: تطبيقات وتحليل (Q21-Q25)', en: '🔹 Section 5: Applications & Analysis (Q21-Q25)' },
+            questions: [
+                {
+                    q: { ar: 'إذا كانت شحنة +Q وشحنة -2Q، فأين تكون خطوط المجال أكثر كثافة؟', en: 'If charges are +Q and -2Q, where are field lines denser?' },
+                    options: [
+                        { ar: 'حول الشحنة -2Q (لأن مقدارها أكبر)', en: 'Around -2Q charge (larger magnitude)' },
+                        { ar: 'حول الشحنة +Q', en: 'Around +Q charge' },
+                        { ar: 'بالتساوي حول كلا الشحنتين', en: 'Equally around both charges' },
+                        { ar: 'في المنتصف فقط', en: 'Only at midpoint' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'كثافة الخطوط تتناسب مع مقدار الشحنة. الشحنة -2Q لها خطوط أكثر', en: 'Line density proportional to charge magnitude. -2Q has more lines' }
+                },
+                {
+                    q: { ar: 'عدد خطوط المجال الخارجة من شحنة +2q مقارنة بشحنة +q:', en: 'Number of field lines exiting +2q compared to +q:' },
+                    options: [
+                        { ar: 'الضعف', en: 'Double' },
+                        { ar: 'نفس العدد', en: 'Same number' },
+                        { ar: 'النصف', en: 'Half' },
+                        { ar: 'أربعة أضعاف', en: 'Four times' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'عدد الخطوط يتناسب مع مقدار الشحنة. +2q لها ضعف خطوط +q', en: 'Number of lines proportional to charge magnitude. +2q has double lines of +q' }
+                },
+                {
+                    q: { ar: 'عند تقريب شحنة موجبة من كشاف كهربائي موجب الشحنة:', en: 'When bringing positive charge near positively charged electroscope:' },
+                    options: [
+                        { ar: 'ورقتا الكشاف تتفرقان أكثر', en: 'Leaves diverge more' },
+                        { ar: 'ورقتا الكشاف تقتربان', en: 'Leaves come closer' },
+                        { ar: 'لا يتغير شيء', en: 'Nothing changes' },
+                        { ar: 'الكشاف يفقد شحنته', en: 'Electroscope loses charge' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'الشحنة الموجبة تدفع إلكترونات الكشاف للأسفل فتزيد شحنة الورقتين الموجبة وتتفرقان أكثر', en: 'Positive charge pushes electrons down, increasing positive charge on leaves, diverging more' }
+                },
+                {
+                    q: { ar: 'خطوط المجال الكهربائي تكون دائماً:', en: 'Electric field lines are always:' },
+                    options: [
+                        { ar: 'عمودية على سطح الموصل عند السطح', en: 'Perpendicular to conductor surface at surface' },
+                        { ar: 'موازية للسطح', en: 'Parallel to surface' },
+                        { ar: 'مائلة بزاوية 45°', en: 'At 45° angle' },
+                        { ar: 'عشوائية الاتجاه', en: 'Random direction' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'خطوط المجال عمودية على سطح الموصل المشحون (لأن المماسي يكون صفراً في حالة الاتزان)', en: 'Field lines perpendicular to charged conductor surface (tangential component is zero in equilibrium)' }
+                },
+                {
+                    q: { ar: 'داخل الموصل المشحون في حالة اتزان كهروستاتيكي، المجال الكهربائي:', en: 'Inside charged conductor in electrostatic equilibrium, electric field:' },
+                    options: [
+                        { ar: 'يساوي صفراً', en: 'Equals zero' },
+                        { ar: 'ثابت غير صفري', en: 'Constant non-zero' },
+                        { ar: 'يتناسب مع الشحنة', en: 'Proportional to charge' },
+                        { ar: 'لانهائي', en: 'Infinite' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'المجال داخل الموصل في حالة اتزان = 0 (وإلا لتحركت الشحنات)', en: 'Field inside conductor in equilibrium = 0 (otherwise charges would move)' }
+                }
+            ]
+        },
+        {
+            id: 'sec6',
+            title: { ar: '🔹 القسم 6: مسائل حسابية (Q26-Q30)', en: '🔹 Section 6: Calculations (Q26-Q30)' },
+            questions: [
+                {
+                    q: { ar: 'شحنة نقطية +5 μC. ما شدة المجال على بعد 0.3 m منها؟', en: 'Point charge +5 μC. Field strength at 0.3 m?' },
+                    options: [
+                        { ar: '<span class="math-display">5 × 10⁵ N/C</span>', en: '<span class="math-display">5 × 10⁵ N/C</span>' },
+                        { ar: '<span class="math-display">5 × 10⁴ N/C</span>', en: '<span class="math-display">5 × 10⁴ N/C</span>' },
+                        { ar: '<span class="math-display">1.5 × 10 N/C</span>', en: '<span class="math-display">1.5 × 10⁵ N/C</span>' },
+                        { ar: '<span class="math-display">5 × 10 N/C</span>', en: '<span class="math-display">5 × 10⁶ N/C</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'E = kQ/r² = (9×10⁹)(5×10⁻⁶)/(0.3)² = 5×10⁵ N/C', en: 'E = kQ/r² = (9×10⁹)(5×10⁻⁶)/(0.3)² = 5×10⁵ N/C' }
+                },
+                {
+                    q: { ar: 'قوة على شحنة 2 μC في مجال 1000 N/C:', en: 'Force on 2 μC charge in 1000 N/C field:' },
+                    options: [
+                        { ar: '<span class="math-display">2 × 10⁻³ N</span>', en: '<span class="math-display">2 × 10⁻³ N</span>' },
+                        { ar: '<span class="math-display">2 × 10⁻⁶ N</span>', en: '<span class="math-display">2 × 10⁶ N</span>' },
+                        { ar: '<span class="math-display">2000 N</span>', en: '<span class="math-display">2000 N</span>' },
+                        { ar: '<span class="math-display">0.002 N</span>', en: '<span class="math-display">0.002 N</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'F = qE = (2×10⁻)(1000) = 2×10⁻³ N', en: 'F = qE = (2×10⁻)(1000) = 2×10⁻³ N' }
+                },
+                {
+                    q: { ar: 'شحنتان +3 μC و +3 μC على بعد 0.2 m. القوة بينهما:', en: 'Two charges +3 μC and +3 μC at 0.2 m. Force between them:' },
+                    options: [
+                        { ar: '<span class="math-display">2.025 N</span> (تنافر)', en: '<span class="math-display">2.025 N</span> (repulsive)' },
+                        { ar: '<span class="math-display">2.025 N</span> (تجاذب)', en: '<span class="math-display">2.025 N</span> (attractive)' },
+                        { ar: '<span class="math-display">4.05 N</span>', en: '<span class="math-display">4.05 N</span>' },
+                        { ar: '<span class="math-display">1.0125 N</span>', en: '<span class="math-display">1.0125 N</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'F = kq₁q₂/r² = (9×10)(3×10⁻⁶)²/(0.2)² = 2.025 N (تنافر لأن الشحنتين موجبتان)', en: 'F = kq₁q₂/r² = (9×10⁹)(3×10⁻⁶)²/(0.2)² = 2.025 N (repulsive, both positive)' }
+                },
+                {
+                    q: { ar: 'إذا تضاعفت المسافة بين شحنتين، القوة تصبح:', en: 'If distance between charges doubles, force becomes:' },
+                    options: [
+                        { ar: 'الربع (1/4)', en: 'One-fourth (1/4)' },
+                        { ar: 'النصف (1/2)', en: 'One-half (1/2)' },
+                        { ar: 'الضعف (2)', en: 'Double (2)' },
+                        { ar: 'أربعة أضعاف (4)', en: 'Four times (4)' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'F ∝ 1/r²، إذا r → 2r فإن F → F/4', en: 'F ∝ 1/r², if r → 2r then F → F/4' }
+                },
+                {
+                    q: { ar: 'ثلاث شحنات +q عند رؤوس مثلث متساوي الأضلاع. المجال في المركز:', en: 'Three charges +q at vertices of equilateral triangle. Field at center:' },
+                    options: [
+                        { ar: 'صفر (يتلاشى بسبب التماثل)', en: 'Zero (cancels due to symmetry)' },
+                        { ar: '3kq/a²', en: '3kq/a²' },
+                        { ar: 'kq/a²', en: 'kq/a²' },
+                        { ar: '√3 kq/a²', en: '√3 kq/a²' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'بسبب التماثل، المجالات الثلاثة تلغي بعضها → المحصلة صفر', en: 'Due to symmetry, three fields cancel → net zero' }
+                }
+            ]
+        }
+    ]
+};
+
+function shuffleArray(array) {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(rng() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+function prepareShuffledExam() {
+    rng = mulberry32(currentSeed);
+    examData = JSON.parse(JSON.stringify(originalExamData));
+    correctAnswersMap = {};
+    let globalIdx = 0;
+    examData.sections.forEach((section) => {
+        section.questions = shuffleArray(section.questions);
+        section.questions.forEach((q) => {
+            const optionsWithCorrect = q.options.map((opt, idx) => ({ option: opt, isCorrect: idx === q.correct }));
+            const shuffledOptions = shuffleArray(optionsWithCorrect);
+            q.options = shuffledOptions.map(o => o.option);
+            q.correct = shuffledOptions.findIndex(o => o.isCorrect);
+            correctAnswersMap[globalIdx] = String.fromCharCode(97 + q.correct);
+            globalIdx++;
+        });
+    });
+}
+
+function reshuffleExam() {
+    const msg = currentLang === 'ar' ? ' سيتم إنشاء أسئلة جديدة ومسح إجاباتك. هل أنت متأكد؟' : '🔄 New questions will be generated. Are you sure?';
+    if (confirm(msg)) {
+        currentSeed = Date.now(); timeRemaining = TOTAL_TIME; answersVisible = false;
+        prepareShuffledExam(); renderExam(); saveState();
+        alert(currentLang === 'ar' ? '🎲 تم تغيير الأسئلة! حظاً موفقاً! 🍀' : '🎲 Questions changed! Good luck! 🍀');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+}
+
+function setLanguage(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.getElementById('btn-ar').classList.toggle('active', lang === 'ar');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.body.classList.toggle('en-mode', lang === 'en');
+    renderExam(); saveState(false);
+}
+
+function renderExam() {
+    const container = document.getElementById('exam-content');
+    const labels = { ar: { option: ['أ', 'ب', 'ج', 'د'], answer: '✅ الإجابة:' }, en: { option: ['A', 'B', 'C', 'D'], answer: '✅ Answer:' } };
+    const lbl = labels[currentLang];
+    let html = '';
+    let globalIdx = 0;
+    
+    examData.sections.forEach((section, secIdx) => {
+        const badgeClass = ['module-1', 'module-2', 'module-3', 'module-4', 'module-5', 'module-6'][secIdx];
+        html += '<section class="bg-white p-6 rounded-2xl shadow-lg border-2 border-purple-100">';
+        html += '<div class="text-center mb-4"><span class="module-badge ' + badgeClass + '">' + section.title[currentLang] + '</span></div>';
+        html += '<ol class="space-y-4 text-sm">';
+        
+        section.questions.forEach((q) => {
+            html += '<li class="border-r-4 border-purple-400 pr-4 py-2" id="q-' + globalIdx + '">';
+            html += '<strong class="text-purple-700">' + (globalIdx + 1) + '.</strong> <span class="arabic-math">' + q.q[currentLang] + '</span><br>';
+            if (q.svg) html += '<div class="graph-container">' + q.svg + '</div>';
+            
+            q.options.forEach((opt, oIdx) => {
+                html += '<label class="cursor-pointer block mt-2 mr-4 hover:bg-purple-50 rounded-lg p-2 transition">';
+                html += '<input type="radio" name="q' + globalIdx + '" value="' + String.fromCharCode(97 + oIdx) + '" class="mr-2 ml-2">';
+                html += '<span class="arabic-math">' + lbl.option[oIdx] + ') ' + opt[currentLang] + '</span>';
+                html += '</label>';
+            });
+            
+            html += '<div class="answer-box text-green-700 mt-3 font-medium ' + (answersVisible ? '' : 'hidden') + ' bg-green-50 rounded-lg p-3 border border-green-200">';
+            html += lbl.answer + ' ' + lbl.option[q.correct] + ') <span class="arabic-math">' + q.options[q.correct][currentLang] + '</span><br>';
+            html += '<span class="text-sm text-green-700 mt-2 block arabic-math">' + q.answer[currentLang] + '</span>';
+            html += '</div></li>';
+            globalIdx++;
+        });
+        
+        html += '</ol></section>';
+    });
+    
+    container.innerHTML = html;
+}
+
+function startTimer() {
+    updateTimerDisplay();
+    timerInterval = setInterval(() => {
+        timeRemaining--;
+        updateTimerDisplay();
+        if (timeRemaining % 60 === 0) saveState(false);
+        if (timeRemaining <= 600) document.getElementById('timer').classList.add('timer-warning');
+        if (timeRemaining <= 0) {
+            clearInterval(timerInterval);
+            alert("⏰ انتهى الوقت!");
+            gradeExam();
+        }
+    }, 1000);
+}
+
+function updateTimerDisplay() {
+    const m = Math.floor(timeRemaining / 60);
+    const s = timeRemaining % 60;
+    document.getElementById('timer').textContent = m.toString().padStart(2,'0') + ':' + s.toString().padStart(2,'0');
+}
+
+function toggleAnswers() {
+    answersVisible = !answersVisible;
+    document.querySelectorAll('.answer-box').forEach(el => el.classList.toggle('hidden', !answersVisible));
+    saveState(false);
+}
+
+function gradeExam() {
+    let correctCount = 0;
+    const sectionScores = new Array(TOTAL_SECTIONS).fill(0);
+    
+    for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+        const sel = document.querySelector('input[name="q'+i+'"]:checked');
+        const li = document.getElementById('q-' + i);
+        if (li) {
+            const isCorrect = sel && sel.value === correctAnswersMap[i];
+            if (isCorrect) {
+                correctCount++;
+                li.classList.add('correct');
+                li.classList.remove('incorrect');
+                sectionScores[Math.floor(i / QUESTIONS_PER_SECTION)]++;
+            } else {
+                li.classList.add('incorrect');
+                li.classList.remove('correct');
+            }
+        }
+    }
+    
+    const score = Math.round((correctCount / TOTAL_QUESTIONS) * 100);
+    document.getElementById('res-total').textContent = score + ' / 100';
+    document.getElementById('res-name').textContent = document.getElementById('studentName').value || 'بطل';
+    document.getElementById('res-date').textContent = new Date().toLocaleDateString('ar-AE');
+    
+    const pc = document.getElementById('sections-performance');
+    pc.innerHTML = '';
+    examData.sections.forEach((s, idx) => {
+        pc.innerHTML += '<div class="flex justify-between items-center p-3 bg-white rounded-lg"><span class="text-gray-700">' + s.title[currentLang] + '</span><span class="font-bold text-purple-700">' + sectionScores[idx] + '/' + QUESTIONS_PER_SECTION + '</span></div>';
+    });
+    
+    const badge = document.getElementById('success-badge');
+    document.getElementById('success-percent').textContent = score + '%';
+    
+    if (currentLang === 'ar') {
+        if (score >= 90) { badge.textContent = ' ممتاز جداً!'; badge.className = 'success-badge grade-excellent'; }
+        else if (score >= 75) { badge.textContent = '👏 ممتاز!'; badge.className = 'success-badge grade-good'; }
+        else if (score >= 50) { badge.textContent = '👍 جيد'; badge.className = 'success-badge grade-pass'; }
+        else { badge.textContent = '💪 حاول مرة أخرى'; badge.className = 'success-badge grade-fail'; }
+    } else {
+        if (score >= 90) { badge.textContent = '🌟 Outstanding!'; badge.className = 'success-badge grade-excellent'; }
+        else if (score >= 75) { badge.textContent = '👏 Excellent!'; badge.className = 'success-badge grade-good'; }
+        else if (score >= 50) { badge.textContent = '👍 Good'; badge.className = 'success-badge grade-pass'; }
+        else { badge.textContent = ' Try Again'; badge.className = 'success-badge grade-fail'; }
+    }
+    
+    document.getElementById('results-panel').classList.remove('hidden');
+    document.getElementById('results-panel').scrollIntoView({ behavior: 'smooth' });
+    if (timerInterval) clearInterval(timerInterval);
+}
+
+function sendResultsToEmail() {
+    const btn = document.getElementById('sendEmailBtn');
+    const status = document.getElementById('emailStatus');
+    btn.disabled = true;
+    btn.textContent = ' جاري الإرسال...';
+    
+    const name = document.getElementById('studentName').value || 'غير محدد';
+    const studentClass = document.getElementById('studentClass').value || 'غير محدد';
+    const date = document.getElementById('examDate').value || new Date().toLocaleDateString();
+    const score = document.getElementById('res-total').textContent;
+    const successRate = document.getElementById('success-percent').textContent;
+    const badge = document.getElementById('success-badge').textContent;
+    
+    let questionsHTML = '<table style="width:100%; border-collapse: collapse; font-family: Arial; font-size: 12px; direction: rtl;">';
+    questionsHTML += '<thead><tr style="background:#7c3aed; color:white;"><th style="padding:8px; border:1px solid #ddd;">#</th><th style="padding:8px; border:1px solid #ddd;">السؤال</th><th style="padding:8px; border:1px solid #ddd;">إجابة الطالب</th><th style="padding:8px; border:1px solid #ddd;">الصحيحة</th><th style="padding:8px; border:1px solid #ddd;">النتيجة</th></tr></thead><tbody>';
+    
+    let globalIdx = 0;
+    examData.sections.forEach((section) => {
+        questionsHTML += '<tr style="background:#ede9fe;"><td colspan="5" style="padding:8px; font-weight:bold; border:1px solid #ddd;">' + section.title.ar + '</td></tr>';
+        section.questions.forEach((q) => {
+            const sel = document.querySelector('input[name="q'+globalIdx+'"]:checked');
+            const sv = sel ? sel.value : null;
+            const cv = correctAnswersMap[globalIdx];
+            const ic = sv === cv;
+            let sat = '❌ لم يجب';
+            let sac = '#dc2626';
+            if (sv) {
+                const si = sv.charCodeAt(0) - 97;
+                sat = q.options[si].ar;
+                sac = ic ? '#16a34a' : '#dc2626';
+            }
+            const cat = q.options[q.correct].ar;
+            const rb = ic ? '#f0fdf4' : '#fef2f2';
+            questionsHTML += '<tr style="background:' + rb + ';"><td style="padding:8px; border:1px solid #ddd; text-align:center;">' + (globalIdx+1) + '</td><td style="padding:8px; border:1px solid #ddd;">' + q.q.ar + '</td><td style="padding:8px; border:1px solid #ddd; color:' + sac + ';">' + sat + '</td><td style="padding:8px; border:1px solid #ddd; color:#16a34a;">' + cat + '</td><td style="padding:8px; border:1px solid #ddd; text-align:center;">' + (ic?'✅':'❌') + '</td></tr>';
+            globalIdx++;
+        });
+    });
+    questionsHTML += '</tbody></table>';
+    
+    const templateParams = {
+        to_email: TARGET_EMAIL,
+        student_name: name,
+        student_class: studentClass,
+        exam_date: date,
+        total_score: score,
+        success_rate: successRate,
+        grade: badge,
+        answers_table: questionsHTML
+    };
+    
+    emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams)
+        .then(() => {
+            status.textContent = '✅ تم الإرسال بنجاح!';
+            status.style.color = '#16a34a';
+            btn.textContent = '✓ تم';
+            alert('تم إرسال النتيجة للمعلم بنجاح!');
+        })
+        .catch((error) => {
+            status.textContent = '❌ فشل الإرسال';
+            status.style.color = '#dc2626';
+            btn.disabled = false;
+            btn.textContent = '📧 حاول مرة أخرى';
+            alert('فشل الإرسال: ' + error.text);
+        });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    const saved = loadState();
+    if (saved && saved.seed) {
+        currentSeed = saved.seed;
+        currentLang = saved.lang || 'ar';
+        timeRemaining = saved.timeRemaining !== undefined ? saved.timeRemaining : TOTAL_TIME;
+        answersVisible = saved.answersVisible || false;
+        document.getElementById('btn-ar').classList.toggle('active', currentLang === 'ar');
+        document.getElementById('btn-en').classList.toggle('active', currentLang === 'en');
+        document.body.classList.toggle('en-mode', currentLang === 'en');
+    } else {
+        currentSeed = Date.now();
+    }
+    prepareShuffledExam();
+    renderExam();
+    if (saved) {
+        if (saved.studentName) document.getElementById('studentName').value = saved.studentName;
+        if (saved.studentClass) document.getElementById('studentClass').value = saved.studentClass;
+        if (saved.examDate) document.getElementById('examDate').value = saved.examDate;
+        if (saved.answers) restoreAnswers(saved.answers);
+    }
+    setupAnswerListeners();
+    setupInputListeners();
+    startTimer();
+});
+window.addEventListener('beforeunload', () => saveState(false));
+</script>
+</body>
+</html>
